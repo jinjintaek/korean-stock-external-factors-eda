@@ -1,0 +1,38 @@
+{
+  "version": "1.0",
+  "created_at": "2026-03-05",
+  "data_scope": {
+    "start_date": "2020-01-01",
+    "end_date": "2024-12-31",
+    "tickers": {
+      "samsung": "005930.KS",
+      "skhynix": "000660.KS",
+      "naver": "035420.KS",
+      "kospi": "^KS11",
+      "usdkrw": "KRW=X",
+      "wti": "CL=F",
+      "gold": "GC=F",
+      "us10y": "^TNX",
+      "sp500": "^GSPC",
+      "nasdaq": "^IXIC"
+    }
+  },
+  "quality_criteria": {
+    "min_rows": "≥ 1,000 (5년치 영업일 기준 약 1,250일)",
+    "max_missing_rate": "Close 기준 5% 이하",
+    "outlier_treatment": "|일간수익률| > 30% → 전일종가 대체; 20~30% → 이상치 플래그",
+    "ffill_limit": "연속 결측 5일 초과 시 NaN 유지",
+    "negative_price": "음수 종가 → 즉시 제거",
+    "min_quality_score": "70점 이상 종목만 EDA 분석 대상"
+  },
+  "data_sources": {
+    "provider": "Yahoo Finance (yfinance)",
+    "price_type": "Adjusted Close (배당·액면분할 반영)",
+    "frequency": "일별 (Business Day)"
+  },
+  "known_limitations": [
+    "KRW=X 환율은 장중 고가·저가 정보 부정확 → Close만 사용",
+    "^TNX 금리는 % 단위 (0.01 = 1bp 아님)",
+    "국내 공휴일/외국 공휴일 거래일 불일치 → outer join 후 ffill 처리"
+  ]
+}
